@@ -1,0 +1,10 @@
+/* npx tailwindcss -i ./Styles/app.css -o ./wwwroot/css/tailwind.css --watch */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.aspect-custom {
+    @screen lg {
+        aspect-ratio: 1.2/1;
+    }
+}

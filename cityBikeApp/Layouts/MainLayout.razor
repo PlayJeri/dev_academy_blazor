@@ -1,0 +1,17 @@
+﻿@inherits LayoutComponentBase
+@using cityBikeApp.Components
+
+<div class="flex flex-col h-screen w-screen bg-slate-100" style="padding-top: env(safe-area-inset-top);">
+    <!-- NavBar -->
+    <NavBar />
+
+    <!-- Body -->
+    <main class="flex-grow">
+        @Body
+    </main>
+
+    <!-- Footer -->
+    <footer class="flex-shrink-0">
+
+    </footer>
+</div>

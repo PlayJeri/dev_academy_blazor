@@ -1,0 +1,55 @@
+﻿@page "/stations"
+@inject StationService StationService
+
+
+<section class="container mx-auto px-4 py-8">
+    <div class="flex items-start gap-4">
+        <div class="grid gap-1">
+            <h1 class="text-3xl font-bold tracking-tight text-blue-500">Station finder</h1>
+            <p class="text-gray-500">Find the best station for your citybike needs.</p>
+        </div>
+        <button
+            class="my-auto ml-auto shrink-0 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">
+            A-Z / Z-A
+        </button>
+    </div>
+    <div class="mt-6">
+        <input
+            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            type="text" @oninput="e => searchTerm = e.Value as string ?? string.Empty"
+            placeholder="Search for a station">
+    </div>
+    <div class="mt-6">
+        @if (StationService == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <div class="grid grid-cols-3 gap-4">
+                @foreach (var station in StationService.FilterStations(searchTerm))
+                {
+                    <NavLink href="@($"/station/{station.Id}")">
+                        <div class="rounded-lg border bg-white text-neutral-800 shadow-sm">
+                            <div class="flex flex-col space-y-1.5 p-6">
+                                <h3 class="text-2xl font-semibold whitespace-nowrap leading-none tracking-tight">
+                                    @station.StationName
+                                </h3>
+                                <p class="text-sm text-neutral-600">
+                                    @station.StationAddress
+                                </p>
+                            </div>
+                        </div>
+                    </NavLink>
+                }
+            </div>
+        }
+    </div>
+</section>
+
+
+
+
+@code {
+    private string searchTerm = string.Empty;
+}

@@ -1,0 +1,27 @@
+﻿@using Models;
+
+@if (IsActive && Stations != null)
+{
+    <div class="absolute mt-2 w-full sm:w-3/4 md:w-1/2 lg:w-1/4 max-h-[220px] overflow-auto bg-white shadow-lg rounded-md">
+    <ul class="divide-y divide-gray-300">
+        @foreach (var station in Stations.Take(5))
+            {
+                <div>
+                    <NavLink href="@($"station/{station.Id}")">
+                        <li class="px-4 py-2 hover:bg-gray-100">
+                            @station.StationName
+                        </li>
+                    </NavLink>
+                </div>
+            }
+        </ul>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsActive { get; set; }
+
+    [Parameter]
+    public List<Station>? Stations { get; set; }
+}
