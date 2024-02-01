@@ -1,20 +1,11 @@
 ﻿@page "/station/{stationId:int}"
 @inject StationService StationService
+@using cityBikeApp.Components
 
-<section class="w-full py-12">
-    <ul>
-        <li>@Details?.Station?.StationName</li>
-        <li>@Details?.Station?.StationAddress</li>
-        <li>Started Journeys: @Details?.StartedJourneysCount</li>
-        <li>Finished Journeys: @Details?.EndedJourneysCount</li>
-        @* @if (Details?.PeakTimes != null)
-        {
-        foreach (var peakTime in Details.PeakTimes)
-        {
-        <li>@peakTime.Hour @peakTime.Count</li>
-        }
-        } *@
-    </ul>
+<section class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <StationDetailsCard Details="@Details" />
+    </div>
 </section>
 
 
@@ -25,6 +16,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Details = await StationService.GetStation(StationId);
+        Details = await StationService.GetStationDetails(StationId);
     }
 }
