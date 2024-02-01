@@ -1,4 +1,5 @@
-﻿using cityBikeApp.Models;
+﻿using System.Runtime.CompilerServices;
+using cityBikeApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace cityBikeApp;
@@ -41,24 +42,63 @@ public class StationService
         return _cachedStations;
     }
 
-    private void DoesNothing()
-    {
-        return;
-    }
-
-    public async Task<StationDetails> GetStation(int stationId)
+    public async Task<StationDetails> GetStationDetails(int stationId)
     {
         var station = _cachedStations.FirstOrDefault(s => s.Id == stationId);
         var journeysCounts = await GetJourneysCounts(stationId);
         var peakTimes = await GetPeakTimesAsync(stationId);
+        var topThreeStations = await getTopThreeStations(stationId);
+        var (averageDuration, averageDistance) = await GetAverageDistanceAndDuration(stationId);
 
         return new StationDetails
         {
             Station = station,
             StartedJourneysCount = journeysCounts.startedJourneysCount,
             EndedJourneysCount = journeysCounts.endedJourneysCount,
+            AvgJourneyDuration = averageDuration,
+            AvgJourneyDistance = averageDistance,
+            TopThreeReturnStations = topThreeStations.ReturnStations,
+            TopThreeDepartureStations = topThreeStations.DepartureStations,
             PeakTimes = peakTimes
         };
+    }
+
+    private async Task<(int Duration, int Distance)> GetAverageDistanceAndDuration(int stationId)
+    {
+        var journeys = await _context.Journeys
+            .Where(j => j.DepartureStationId == stationId || j.ReturnStationId == stationId)
+            .ToListAsync();
+
+        var totalDistance = journeys.Sum(j => j.Distance);
+        var averageDistance = totalDistance / journeys.Count ?? 0;
+
+        var totalDuration = journeys.Sum(j => j.Duration);
+        var averageDuration = totalDuration / journeys.Count ?? 0;
+
+        return (averageDuration, averageDistance);
+    }
+
+    private async Task<(List<TopThreeStation> ReturnStations, List<TopThreeStation> DepartureStations)> getTopThreeStations(int stationId)
+    {
+        var top3ReturnStations = await _context.Journeys
+            .Where(j => j.ReturnStationId == stationId)
+            .GroupBy(j => new { j.DepartureStationId, j.DepartureStation.StationName })
+            .Select(g => new { g.Key.StationName, Count = g.Count() })
+            .OrderByDescending(g => g.Count)
+            .Take(3)
+            .Select(g => new TopThreeStation { StationName = g.StationName!, Count = g.Count })
+            .ToListAsync();
+
+        var top3DepartureStations = await _context.Journeys
+            .Where(j => j.DepartureStationId == stationId)
+            .GroupBy(j => new { j.ReturnStationId, j.ReturnStation.StationName })
+            .Select(g => new { g.Key.StationName, Count = g.Count() })
+            .OrderByDescending(g => g.Count)
+            .Take(3)
+            .Select(g => new TopThreeStation { StationName = g.StationName!, Count = g.Count })
+            .ToListAsync();
+
+        return (top3ReturnStations, top3DepartureStations);
     }
 
     private async Task<(int startedJourneysCount, int endedJourneysCount)> GetJourneysCounts(int stationId)
