@@ -27,13 +27,43 @@ public class StationService
         }
     }
 
-    public List<Station> FilterStations(string filter)
+    public int GetStationsCount(string searchTerm)
     {
-        return _cachedStations
-            .Where(
+        var stations = _cachedStations.AsQueryable();
+
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            stations = stations.Where(
                 s => s.StationName != null &&
-                s.StationName.Contains(filter, StringComparison.OrdinalIgnoreCase)
-            )
+                s.StationName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+            );
+        }
+
+        return stations.Count();
+    }
+
+    public List<Station> FilterStations(string searchTerm, int pageNumber = 1, int pageSize = 20)
+    {
+        var stations = _cachedStations.AsQueryable();
+
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            stations = stations.Where(
+                s => s.StationName != null &&
+                s.StationName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+            );
+        }
+
+        int maxPageNumber = stations.Count() / pageSize + 1;
+
+        if (pageNumber > maxPageNumber)
+        {
+            pageNumber = maxPageNumber;
+        }
+
+        return stations
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToList();
     }
 
