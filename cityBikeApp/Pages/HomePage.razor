@@ -16,16 +16,12 @@
                         Discover a new way to travel. Find stations, plan your journey, and get riding!
                     </p>
                 </div>
-                <div class="flex flex-col justify-center">
-                    <div class="flex flex-row justify-center lg:justify-start pt-4 lg:mx-0 min-w-[400px]">
-                        <input class="w-2/5 p-2 border border-gray-300 rounded-s-xl shadow-sm"
-                            placeholder="Search for stations..." type="text"
-                            @oninput="e => SearchTerm = e.Value as string ?? string.Empty"
-                            @onfocus="() => ShowDropDown = true"
-                            @onblur="async () => { await Task.Delay(100); ShowDropDown = false; }" />
-                        <button class="px-4 bg-neutral-800 text-white rounded-e-xl shadow-sm"
-                            type="submit">Search</button>
-                    </div>
+                <div class="flex flex-col items-center lg:items-start mb-40">
+                    <input class="w-3/5 p-2 border border-gray-300 rounded-xl shadow-sm"
+                        placeholder="Search for stations..." type="text"
+                        @oninput="e => SearchTerm = e.Value as string ?? string.Empty"
+                        @onfocus="() => ShowDropDown = true"
+                        @onblur="async () => { await Task.Delay(100); ShowDropDown = false; }" />
                     <SearchResultDropDown IsActive="@ShowDropDown"
                         Stations="@StationService.FilterStations(SearchTerm).Take(5).ToList()" />
                 </div>

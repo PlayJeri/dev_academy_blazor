@@ -14,6 +14,18 @@ public class StationService
         _cachedStations = _context.Stations.ToList();
     }
 
+    public void OrderStationsByName(SortOrder order)
+    {
+        if (order == SortOrder.Ascending)
+        {
+            _cachedStations = _cachedStations.OrderBy(s => s.StationName).ToList();
+        }
+        else
+        {
+            _cachedStations = _cachedStations.OrderByDescending(s => s.StationName).ToList();
+        }
+    }
+
     public List<Station> FilterStations(string filter)
     {
         return _cachedStations
