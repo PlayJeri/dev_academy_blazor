@@ -2,9 +2,10 @@
 @inject StationService StationService
 @using cityBikeApp.Components
 
-<section class="container mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+<section class="container mx-auto pt-12 px-2 md:px-8 lg:px-12">
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 2xl:grid-cols-3">
         <StationDetailsCard Details="@Details" />
+        <PeakTimeChart PeakTimes="@Details?.PeakTimes" />
     </div>
 </section>
 
