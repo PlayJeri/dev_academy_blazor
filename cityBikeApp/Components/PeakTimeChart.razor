@@ -1,0 +1,22 @@
+﻿<div class="rounded-lg border text-card-foreground shadow-lg">
+    <div class="rounded-t-lg p-6 flex flex-row items-center justify-between bg-blue-500 text-white">
+        <h3 class="whitespace-nowrap tracking-tight text-xl font-medium">Peak Times</h3>
+        <p>Journeys taken each hour</p>
+    </div>
+    <div class="pt-8 pl-2">
+        <RadzenChart>
+            <RadzenCategoryAxis Min="0" Max="23" />
+            <RadzenLineSeries Data="@PeakTimes" Smooth="true" CategoryProperty="Hour" ValueProperty="Count"
+                Title="Peak Times" />
+            <RadzenLegend Visible="false" />
+            <RadzenChartTooltipOptions Visible="false" />
+        </RadzenChart>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public List<PeakTime>? PeakTimes { get; set; }
+
+}
