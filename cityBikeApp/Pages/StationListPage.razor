@@ -80,7 +80,7 @@
             }
         }
     }
-    private SortOrder sortOrder = SortOrder.Descending;
+    private cityBikeApp.SortOrder sortOrder = cityBikeApp.SortOrder.Descending;
     int currentPage = 1;
     int totalPages;
     protected override void OnInitialized()
@@ -90,7 +90,8 @@
 
     private void ToggleSortOrder()
     {
-        sortOrder = sortOrder == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
+        sortOrder = sortOrder == cityBikeApp.SortOrder.Ascending ? cityBikeApp.SortOrder.Descending :
+        cityBikeApp.SortOrder.Ascending;
         StationService.OrderStationsByName(sortOrder);
     }
 }
