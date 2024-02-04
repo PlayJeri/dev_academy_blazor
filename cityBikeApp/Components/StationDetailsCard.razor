@@ -5,24 +5,24 @@
     </div>
     <div class="p-6 grid gap-4">
         <div class="flex items-center justify-between">
-            <span class="text-sm font-semibold">Average Journey Distance</span>
-            <span class="text-sm text-gray-700">@FormatDistance(Details?.AvgJourneyDistance ?? 0)</span>
+            <span class="text-md font-semibold">Average Journey Distance</span>
+            <span class="text-md text-gray-700">@FormatDistance(Details?.AvgJourneyDistance ?? 0)</span>
         </div>
         <div class="flex items-center justify-between">
-            <span class="text-sm font-semibold">Average Journey Duration</span>
-            <span class="text-sm text-gray-700">@FormatDuration(Details?.AvgJourneyDuration ?? 0)</span>
+            <span class="text-md font-semibold">Average Journey Duration</span>
+            <span class="text-md text-gray-700">@FormatDuration(Details?.AvgJourneyDuration ?? 0)</span>
         </div>
         <div class="flex items-center justify-between">
-            <span class="text-sm font-semibold">Started journeys</span>
-            <span class="text-sm text-gray-700">@Details?.StartedJourneysCount</span>
+            <span class="text-md font-semibold">Started journeys</span>
+            <span class="text-md text-gray-700">@Details?.StartedJourneysCount</span>
         </div>
         <div class="flex items-center justify-between">
-            <span class="text-sm font-semibold">Ended journeys</span>
-            <span class="text-sm text-gray-700">@Details?.EndedJourneysCount</span>
+            <span class="text-md font-semibold">Ended journeys</span>
+            <span class="text-md text-gray-700">@Details?.EndedJourneysCount</span>
         </div>
         <div>
-            <h3 class="text-sm font-semibold">Top Return Stations</h3>
-            <ul class="list-disc list-inside text-sm text-gray-700">
+            <h3 class="text-md font-semibold">Top Return Stations</h3>
+            <ul class="list-disc list-inside text-md text-gray-700">
                 @foreach (var station in Details?.TopThreeReturnStations ?? new List<TopThreeStation>())
                 {
                     <li>@station.StationName Count:@station.Count</li>
@@ -30,8 +30,8 @@
             </ul>
         </div>
         <div>
-            <h3 class="text-sm font-semibold">Top Departure Stations</h3>
-            <ul class="list-disc list-inside text-sm text-gray-700">
+            <h3 class="text-md font-semibold">Top Departure Stations</h3>
+            <ul class="list-disc list-inside text-md text-gray-700">
                 @foreach (var station in Details?.TopThreeDepartureStations ?? new List<TopThreeStation>())
                 {
                     <li>@station.StationName Count:@station.Count</li>
