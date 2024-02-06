@@ -1,0 +1,30 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div class="rounded-lg border text-card-foreground shadow-lg">
+    <div class="rounded-t-lg p-6 flex flex-row items-center justify-between bg-blue-500 text-white">
+        <h3 class="whitespace-nowrap tracking-tight text-xl font-medium">Station location</h3>
+    </div>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+</div>
+
+@code {
+    [Parameter]
+    public string? Latitude { get; set; }
+    [Parameter]
+    public string? Longitude { get; set; }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Task.Delay(500);
+            if (double.TryParse(Latitude, out var lat) && double.TryParse(Longitude, out var lng))
+            {
+                await JSRuntime.InvokeVoidAsync("initMap", "map", lat, lng);
+            }
+            else
+            {
+                Console.WriteLine("Invalid latitude or longitude");
+            }
+        }
+    }
+}
