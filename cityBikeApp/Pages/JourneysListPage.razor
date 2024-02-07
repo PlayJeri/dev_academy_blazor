@@ -1,0 +1,24 @@
+﻿@inject JourneysService JourneyService
+@using cityBikeApp.Models
+@using cityBikeApp.Components
+@page "/journeys"
+
+@if (journeys == null || journeys.Count == 0)
+{
+    <p>No journeys found.</p>
+}
+else
+{
+    <div class="container my-12 mx-auto overflow-auto">
+    <JourneysTable Journeys="journeys" />
+</div>
+}
+
+@code {
+    private List<Journey>? journeys;
+
+    protected override async Task OnInitializedAsync()
+    {
+        journeys = await JourneyService.GetJourneys();
+    }
+}
