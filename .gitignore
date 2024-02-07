@@ -39,3 +39,6 @@ bld/
 
 # macOS
 .DS_Store
+
+# Tailwind compiled output
+*/**/tailwind.css
