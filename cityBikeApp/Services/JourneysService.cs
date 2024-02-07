@@ -16,6 +16,10 @@ public class JourneysService
 
     public async Task<List<Journey>> GetJourneys()
     {
-        return await _context.Journeys.Take(20).ToListAsync();
+        return await _context.Journeys
+            .Include(j => j.DepartureStation)
+            .Include(j => j.ReturnStation)
+            .Take(20)
+            .ToListAsync();
     }
 }
