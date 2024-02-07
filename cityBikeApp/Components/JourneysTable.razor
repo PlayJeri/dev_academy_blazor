@@ -1,0 +1,55 @@
+﻿@using cityBikeApp.Models
+
+<table class="shadow-xl w-full">
+    <thead class="bg-white">
+        <tr>
+            <TableHeader Header="Departure station" />
+            <TableHeader Header="Return station" />
+            <TableHeader Header="Distance" />
+            <TableHeader Header="Duration" />
+        </tr>
+    </thead>
+    <tbody class="bg-white">
+        @foreach (var journey in Journeys)
+        {
+            <tr class="border-t border-blue-200">
+                <TableData Data="@journey.DepartureStation.StationName" />
+                <TableData Data="@journey.ReturnStation.StationName" />
+                <TableData Data="@formatDistance(journey.Distance ?? 0)" />
+                <TableData Data="@formatDuration(journey.Duration ?? 0)" />
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+    [Parameter]
+    public required List<Journey> Journeys { get; set; }
+
+    private string formatDistance(int distance)
+    {
+        if (distance < 1000)
+        {
+            return $"{distance} m";
+        }
+        else
+        {
+            var km = distance / 1000;
+            var hundredMeters = (distance % 1000) / 100;
+            return $"{km}.{hundredMeters} km";
+        }
+    }
+
+    private string formatDuration(int duration)
+    {
+        if (duration < 60)
+        {
+            return $"{duration} s";
+        }
+        else
+        {
+            return $"{duration / 60} min";
+        }
+    }
+}
