@@ -3,10 +3,10 @@
 <table class="shadow-xl w-full">
     <thead class="bg-white">
         <tr>
-            <TableHeader Header="Departure station" />
-            <TableHeader Header="Return station" />
-            <TableHeader Header="Distance" />
-            <TableHeader Header="Duration" />
+            <TableHeader Header="Departure station" OnClick="() => HeaderClick(OrderBy.DepartureStationName)" />
+            <TableHeader Header="Return station" OnClick="() => HeaderClick(OrderBy.ReturnStationName)" />
+            <TableHeader Header="Distance" OnClick="() => HeaderClick(OrderBy.Distance)" />
+            <TableHeader Header="Duration" OnClick="() => HeaderClick(OrderBy.Duration)" />
         </tr>
     </thead>
     <tbody class="bg-white">
@@ -26,6 +26,14 @@
 @code {
     [Parameter]
     public required List<Journey> Journeys { get; set; }
+
+    [Parameter]
+    public EventCallback<OrderBy> OnHeaderClick { get; set; }
+    void HeaderClick(OrderBy orderBy)
+    {
+        Console.WriteLine("Clickidy click");
+        OnHeaderClick.InvokeAsync(orderBy);
+    }
 
     private string formatDistance(int distance)
     {
