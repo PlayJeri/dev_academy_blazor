@@ -14,12 +14,46 @@ public class JourneysService
         _context = context;
     }
 
-    public async Task<List<Journey>> GetJourneys()
+    public async Task<List<Journey>> GetJourneys(
+        bool orderAscending = true,
+        OrderBy orderBy = OrderBy.DepartureStationName,
+        int offset = 0,
+        int limit = 20
+        )
     {
-        return await _context.Journeys
+        IQueryable<Journey> query = _context.Journeys
             .Include(j => j.DepartureStation)
-            .Include(j => j.ReturnStation)
-            .Take(20)
+            .Include(j => j.ReturnStation);
+
+        switch (orderBy)
+        {
+            case OrderBy.ReturnStationName:
+                query = orderAscending == true
+                    ? query.OrderBy(j => j.ReturnStation.StationName)
+                    : query.OrderByDescending(j => j.ReturnStation.StationName);
+                break;
+            case OrderBy.DepartureStationName:
+                query = orderAscending == true
+                    ? query.OrderBy(j => j.DepartureStation.StationName)
+                    : query.OrderByDescending(j => j.DepartureStation.StationName);
+                break;
+            case OrderBy.Duration:
+                query = orderAscending == true
+                    ? query.OrderBy(j => j.Duration)
+                    : query.OrderByDescending(j => j.Duration);
+                break;
+            case OrderBy.Distance:
+                query = orderAscending == true
+                    ? query.OrderBy(j => j.Distance ?? 0)
+                    : query.OrderByDescending(j => j.Distance ?? 0);
+                break;
+        }
+
+        var journeys = await query
+            .Skip(offset)
+            .Take(limit)
             .ToListAsync();
+
+        return journeys;
     }
 }
