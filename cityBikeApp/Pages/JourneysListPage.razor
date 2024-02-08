@@ -10,12 +10,52 @@
 else
 {
     <div class="container my-12 mx-auto overflow-auto">
-    <JourneysTable Journeys="journeys" />
+    <JourneysTable Journeys="journeys" OnHeaderClick="HandleHeaderClick" />
+    <div class="flex justify-around md:w-1/4 w-full mx-auto h-12 my-6">
+        <button class="bg-blue-500 hover:bg-blue-700 disabled:bg-gray-500 text-white font-bold py-2 px-4 rounded"
+            @onclick="PreviousPage" disabled="@(offset < limit)">
+            Previous
+        </button>
+        <button class="bg-blue-500 hover:bg-blue-700 disabled:bg-gray-500 text-white font-bold py-2 px-4 rounded"
+            @onclick="NextPage" disabled="@(journeys == null || journeys.Count < limit)">
+            Next
+        </button>
+    </div>
 </div>
 }
 
 @code {
     private List<Journey>? journeys;
+    private int offset = 0;
+    private int limit = 20;
+    private bool ascendingOrder = true;
+    private OrderBy orderBy = OrderBy.DepartureStationName;
+    async void HandleHeaderClick(OrderBy orderBy)
+    {
+        if (this.orderBy == orderBy)
+        {
+            ascendingOrder = !ascendingOrder;
+        }
+        this.orderBy = orderBy;
+        await UpdateJourneys();
+        StateHasChanged();
+    }
+    private async Task NextPage()
+    {
+        if (journeys == null || journeys.Count < limit) return;
+        offset += limit;
+        await UpdateJourneys();
+    }
+    private async Task PreviousPage()
+    {
+        if (offset < limit) return;
+        offset -= limit;
+        await UpdateJourneys();
+    }
+    private async Task UpdateJourneys()
+    {
+        journeys = await JourneyService.GetJourneys(ascendingOrder, orderBy, offset, limit);
+    }
 
     protected override async Task OnInitializedAsync()
     {
