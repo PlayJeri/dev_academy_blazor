@@ -1,8 +1,22 @@
-﻿<th scope="col" class="px-6 py-3 text-left text-lg font-bold text-blue-500 uppercase tracking-wider">
-    @Header
+﻿<th scope="col" @onclick="HandleClick"
+    class="px-6 py-3 text-left text-lg font-bold text-blue-500 uppercase tracking-wider">
+    <button>
+        @Header
+    </button>
 </th>
 
 @code {
     [Parameter]
     public required string Header { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    private async Task HandleClick()
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync();
+        }
+    }
 }
