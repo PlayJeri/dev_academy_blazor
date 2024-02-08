@@ -26,31 +26,41 @@ else
 
 @code {
     private List<Journey>? journeys;
+    private bool isProcessing = false;
     private int offset = 0;
     private int limit = 20;
     private bool ascendingOrder = true;
     private OrderBy orderBy = OrderBy.DepartureStationName;
     async void HandleHeaderClick(OrderBy orderBy)
     {
+        if (isProcessing) return;
+        isProcessing = true;
         if (this.orderBy == orderBy)
         {
             ascendingOrder = !ascendingOrder;
         }
         this.orderBy = orderBy;
         await UpdateJourneys();
+        isProcessing = false;
         StateHasChanged();
     }
     private async Task NextPage()
     {
+        if (isProcessing) return;
+        isProcessing = true;
         if (journeys == null || journeys.Count < limit) return;
         offset += limit;
         await UpdateJourneys();
+        isProcessing = false;
     }
     private async Task PreviousPage()
     {
+        if (isProcessing) return;
+        isProcessing = true;
         if (offset < limit) return;
         offset -= limit;
         await UpdateJourneys();
+        isProcessing = false;
     }
     private async Task UpdateJourneys()
     {
