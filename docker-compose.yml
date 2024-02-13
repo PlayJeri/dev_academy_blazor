@@ -3,10 +3,6 @@ services:
   db:
     image: postgres
     restart: always
-    environment:
-      POSTGRES_USER: academy
-      POSTGRES_PASSWORD: academy
-      POSTGRES_DB: citybike
     build:
       context: ./database
       dockerfile: Dockerfile
