@@ -3,7 +3,7 @@ using cityBikeApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace cityBikeApp;
+namespace cityBikeApp.Services;
 
 public class JourneysService
 {

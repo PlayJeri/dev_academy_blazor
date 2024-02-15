@@ -2,7 +2,7 @@
 using cityBikeApp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace cityBikeApp;
+namespace cityBikeApp.Services;
 
 public interface IStationService
 {

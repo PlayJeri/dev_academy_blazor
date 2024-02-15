@@ -1,4 +1,4 @@
-using cityBikeApp;
+using cityBikeApp.Services;
 using cityBikeApp.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -9,7 +9,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 // builder.Services.AddDbContextFactory<CitybikeContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<CitybikeContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<StationService>();
+builder.Services.AddScoped<IStationService, StationService>();
 builder.Services.AddScoped<JourneysService>();
 
 var app = builder.Build();
