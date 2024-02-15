@@ -128,7 +128,13 @@ Database consists of two tables: station and journey.
 
 ## Conclusion
 
-(Conclude with a summary of what you learned from the project, any challenges you faced and how you overcame them, and any future improvements you would make if you were to continue working on the project.)
+I am pleased with how this project turned out. This was definitely interesting project to work on that allowed me to delve deeper into .NET and Blazor.
+
+The project not only met the customer's requirements but also included additional features that I believe users would find both interesting and useful. The implementation of business logic and database operations, as well as the integration of a third-party API (OpenStreetMap), added depth and functionality to the application.
+
+Using Git for version control allowed me to effectively manage and track changes in the codebase, and made it easier to apply bigger changes to the application. The use of Docker also ensures that the final product is easy deploy and further enhances the project's further development.
+
+Overall, this project was a valuable learning experience and a good opportunity to display my skills as a software developer.
 
 ## Instructions to run the project locally
 
