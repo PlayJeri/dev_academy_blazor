@@ -5,7 +5,16 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace cityBikeApp.Services;
 
-public class JourneysService
+public interface IJourneysService
+{
+    Task<List<Journey>> GetJourneys(
+        bool orderAscending = true,
+        OrderBy orderBy = OrderBy.DepartureStationName,
+        int offset = 0, int limit = 20
+    );
+}
+
+public class JourneysService : IJourneysService
 {
     private CitybikeContext _context;
 

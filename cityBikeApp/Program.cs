@@ -7,10 +7,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-// builder.Services.AddDbContextFactory<CitybikeContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<CitybikeContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IStationService, StationService>();
-builder.Services.AddScoped<JourneysService>();
+builder.Services.AddScoped<IJourneysService, JourneysService>();
 
 var app = builder.Build();
 
