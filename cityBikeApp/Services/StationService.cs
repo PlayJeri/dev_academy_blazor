@@ -4,7 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cityBikeApp;
 
-public class StationService
+public interface IStationService
+{
+    public List<Station> GetStations();
+    void OrderStationsByName(SortOrder order);
+    int GetStationsCount(string searchTerm);
+    List<Station> FilterStations(string searchTerm, int pageNumber = 1, int pageSize = 20);
+    Task<StationDetails> GetStationDetails(int stationId);
+    Task<(int Duration, int Distance)> GetAverageDistanceAndDuration(int stationId);
+    Task<(List<TopThreeStation> ReturnStations, List<TopThreeStation> DepartureStations)> getTopThreeStations(int stationId);
+    Task<(int startedJourneysCount, int endedJourneysCount)> GetJourneysCounts(int stationId);
+    Task<List<PeakTime>> GetPeakTimesAsync(int stationId);
+}
+
+public class StationService : IStationService
 {
     private readonly CitybikeContext _context;
     private List<Station> _cachedStations = new();
@@ -93,7 +106,7 @@ public class StationService
         };
     }
 
-    private async Task<(int Duration, int Distance)> GetAverageDistanceAndDuration(int stationId)
+    public async Task<(int Duration, int Distance)> GetAverageDistanceAndDuration(int stationId)
     {
         var journeys = await _context.Journeys
             .Where(j => j.DepartureStationId == stationId || j.ReturnStationId == stationId)
@@ -108,7 +121,7 @@ public class StationService
         return (averageDuration, averageDistance);
     }
 
-    private async Task<(List<TopThreeStation> ReturnStations, List<TopThreeStation> DepartureStations)> getTopThreeStations(int stationId)
+    public async Task<(List<TopThreeStation> ReturnStations, List<TopThreeStation> DepartureStations)> getTopThreeStations(int stationId)
     {
         var top3ReturnStations = await _context.Journeys
             .Where(j => j.ReturnStationId == stationId)
@@ -131,7 +144,7 @@ public class StationService
         return (top3ReturnStations, top3DepartureStations);
     }
 
-    private async Task<(int startedJourneysCount, int endedJourneysCount)> GetJourneysCounts(int stationId)
+    public async Task<(int startedJourneysCount, int endedJourneysCount)> GetJourneysCounts(int stationId)
     {
         var startedJourneysCount = await _context.Stations
             .Where(s => s.Id == stationId)
@@ -146,7 +159,7 @@ public class StationService
         return (startedJourneysCount, endedJourneysCount);
     }
 
-    private async Task<List<PeakTime>> GetPeakTimesAsync(int stationId)
+    public async Task<List<PeakTime>> GetPeakTimesAsync(int stationId)
     {
         var peakTimes = await _context.Journeys
                 .Where(j => j.DepartureStationId == stationId && j.DepartureDateTime.HasValue)
