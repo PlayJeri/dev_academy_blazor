@@ -13,6 +13,7 @@ This project works as a ("working as a software developer / ohjelmistokehitt√§j√
 - [Testing](#testing)
 - [Database Structure](#database-structure)
 - [Conclusion](#conclusion)
+- [Run project locally](#instructions-to-run-the-project-locally)
 
 ## Exercise and Functional Requirements
 
