@@ -17,7 +17,7 @@
                     </p>
                 </div>
                 <div class="flex flex-col items-center lg:items-start mb-40">
-                    <input class="w-3/5 p-2 border border-gray-300 rounded-xl shadow-sm"
+                    <input id="stationSearch" class="w-3/5 p-2 border border-gray-300 rounded-xl shadow-sm"
                         placeholder="Search for stations..." type="text"
                         @oninput="e => SearchTerm = e.Value as string ?? string.Empty"
                         @onfocus="() => ShowDropDown = true"
