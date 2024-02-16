@@ -79,9 +79,9 @@ I tested the size of the cached stations in StationService to determine if the c
 
 #### Pagination
 
-While testing the pagination of journeys data I noticed that the program would crash if pagination button was clicked too fast. The crash was caused by the asynchronous method that fetched the next journeys from database. The issue arose when this method was triggered while it was already running.
+While testing the sorting and pagination of journeys data I noticed that the program would crash if pagination or header buttons was clicked several times in a row. The crash was caused by the asynchronous methods that fetched from the database. The issue arose when this method was triggered while it was already running.
 
-To solve this issue I introduced a boolean variable `isProcessing`. This variable is set to `true` when the data fetching method starts running, and set back to `false` once the method has finished. If `isProcessing` is `true`, the pagination button is disabled, preventing the data fetching method from being triggered again until the current fetch operation has completed.
+To solve this issue I introduced a boolean variable `isProcessing`. This variable is set to `true` when the data fetching method starts running, and set back to `false` once the method has finished. If `isProcessing` is `true` and the async method is called again the method will return early to prevent the crash.
 
 #### Station search field
 
