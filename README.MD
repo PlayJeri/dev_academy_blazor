@@ -1,19 +1,18 @@
-# Project Title
+# Helsinki city bike app
+
+## Introduction
+
+This project works as a ("working as a software developer / ohjelmistokehittäjänä toimiminen") project. The goal of this project was to demonstrate my ability to develop a software project based on given specifications. The project is built with .NET and Blazor, and it serves as a testament to my skills as a developer.
+
+(This project is based on a pre-assignment for Solita's Dev Academy.)
 
 ## Table of Contents
 
-- [Introduction](#introduction)
 - [Exercise](#exercise)
 - [Implementation](#implementation)
 - [Testing](#testing)
 - [Database Structure](#database-structure)
 - [Conclusion](#conclusion)
-
-## Introduction
-
-This project works as a ("working as a software developer / ohjelmistokehittäjänä toimiminen näyttö") project. The goal of this project was to demonstrate my ability to develop a software project based on given specifications. The project is built with .NET and Blazor, and it serves as a testament to my skills as a developer.
-
-(This project is based on a pre-assignment for Solita's Dev Academy.)
 
 ## Exercise and Functional Requirements
 
