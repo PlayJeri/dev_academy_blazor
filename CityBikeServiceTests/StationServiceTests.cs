@@ -94,4 +94,40 @@ public class StationServiceTests : IDisposable
         Assert.Equal(Station3ExpectedCounts, Station3JourneyCount);
         Assert.Equal(Station4ExpectedCounts, Station4JourneyCount);
     }
+
+    [Fact]
+    public async Task TestGetTopThreeStations()
+    {
+        // Arrange
+        _context.Stations.Add(new Station { Id = 1, StationName = "Station1" });
+        _context.Stations.Add(new Station { Id = 2, StationName = "Station2" });
+        _context.Stations.Add(new Station { Id = 3, StationName = "Station3" });
+        _context.Stations.Add(new Station { Id = 4, StationName = "Station4" });
+
+        _context.Journeys.Add(new Journey { DepartureStationId = 1, ReturnStationId = 2 });
+        _context.Journeys.Add(new Journey { DepartureStationId = 1, ReturnStationId = 2 });
+        _context.Journeys.Add(new Journey { DepartureStationId = 1, ReturnStationId = 3 });
+        _context.Journeys.Add(new Journey { DepartureStationId = 2, ReturnStationId = 1 });
+        _context.Journeys.Add(new Journey { DepartureStationId = 2, ReturnStationId = 1 });
+        _context.Journeys.Add(new Journey { DepartureStationId = 3, ReturnStationId = 1 });
+
+        _context.SaveChanges();
+
+        // Act
+        var (top3ReturnStations, top3DepartureStations) = await _stationService.getTopThreeStations(1);
+
+        // Assert
+        Assert.Equal(2, top3ReturnStations.Count);
+        Assert.Equal("Station2", top3ReturnStations[0].StationName);
+        Assert.Equal(2, top3ReturnStations[0].Count);
+        Assert.Equal("Station3", top3ReturnStations[1].StationName);
+        Assert.Equal(1, top3ReturnStations[1].Count);
+
+        Assert.Equal(2, top3DepartureStations.Count);
+        Assert.Equal("Station2", top3DepartureStations[0].StationName);
+        Assert.Equal(2, top3DepartureStations[0].Count);
+        Assert.Equal("Station3", top3DepartureStations[1].StationName);
+        Assert.Equal(1, top3DepartureStations[1].Count);
+    }
+
 }
