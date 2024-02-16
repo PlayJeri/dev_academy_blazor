@@ -1,7 +1,5 @@
 using cityBikeApp.Services;
 using cityBikeApp.Models;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
