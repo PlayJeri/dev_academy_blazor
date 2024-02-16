@@ -34,7 +34,7 @@
             <ul class="list-disc list-inside text-md text-gray-700">
                 @foreach (var station in Details?.TopThreeDepartureStations ?? new List<TopThreeStation>())
                 {
-                    <li>@station.StationName Count:@station.Count</li>
+                    <li>@station.StationName Number of journeys:@station.Count</li>
                 }
             </ul>
         </div>
