@@ -1,7 +1,6 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using cityBikeApp.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace cityBikeApp.Services;
 
